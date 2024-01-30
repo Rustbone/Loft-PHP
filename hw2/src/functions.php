@@ -70,8 +70,6 @@ function task4() {
   echo "Unix-время для '24.02.2016 00:00:00': $unixTime";
 }
 
-$string1 = 'Карл у Клары украл Кораллы';
-$string2 = 'Две бутылки лимонада';
 function task5($string) {
   $string = str_replace('К', '', $string);
   $string = str_replace('Две', 'Три', $string);

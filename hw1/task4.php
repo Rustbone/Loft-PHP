@@ -9,7 +9,7 @@
 
  */
 
- $day = 15;
+ $day = rand(0, 8);
 switch($day){
   case 1:
   case 2:

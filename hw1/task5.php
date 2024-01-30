@@ -28,4 +28,10 @@ X5 ­120 ­ 5 ­ 2015
   echo "{$value['model']} {$value['speed']} {$value['doors']} {$value['year']}<br><br>";
  }
 
- // $cars прописать константой const CARS, и в цикле тоже, но не выводиться. Почему?
+ // пробовал $cars прописать константой const CARS, и в цикле тоже, но не выводиться. Почему?
+
+// const CARS = ['bmw'=>$bmw, 'toyota'=>$toyota, 'opel'=>$opel];
+//  foreach (CARS as $key => $value) {
+//   echo "CAR $key<br>";
+//   echo "{$value['model']} {$value['speed']} {$value['doors']} {$value['year']}<br><br>";
+//  }
