@@ -30,9 +30,9 @@ class Application
 
         } catch (RedirectException $e) {
             header('Location: ' . $e->getUrl());
-        } catch (RedirectException $e) {
+        } catch (Error404Exception $e) {
             header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found", true, 404);
-            echo 'Page not found';
+            echo 'Page not found hw5';
         }
     }
 

@@ -24,6 +24,7 @@ class Route
             $actionName = $parts[2];
         }
         $controllerClassName = 'App\\Controller\\' . ucfirst(strtolower($controllerName));
+        //d($controllerClassName, $actionName);
         if (!class_exists($controllerClassName)) {
             return false;
         }
@@ -50,6 +51,7 @@ class Route
             $this->action = $this->routes[$uri][1];
             return;
         }
+        
 
         if (!$this->auto($uri)) {
             throw new Error404Exception();

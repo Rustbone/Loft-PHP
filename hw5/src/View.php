@@ -6,8 +6,8 @@ class View {
   private $data;
   private $twig;
 
-  public function setTemplatePath($templatePath) {
-      $this->templatePath = $templatePath;
+  public function setTemplatePath($path) {
+      $this->templatePath = $path;
   }
 
   public function __get($name)
@@ -15,18 +15,18 @@ class View {
       return $this->data[$name];
    }
 
-  // public function render($template, $data = []) {
-  //     $templateFile = $this->templatePath . '/' . $template . '.php';
+//   public function render($template, $data = []) {
+//       $templateFile = $this->templatePath . '/' . $template . '.php';
       
-  //     if (file_exists($templateFile)) {
-  //         extract($data);
-  //         ob_start();
-  //         include $templateFile;
-  //         return ob_get_clean();
-  //     } else {
-  //         throw new RedirectException("Template file not found: " . $templateFile);
-  //     }
-  // }
+//       if (file_exists($templateFile)) {
+//           extract($data);
+//           ob_start();
+//           include $templateFile;
+//           return ob_get_clean();
+//       } else {
+//           throw new RedirectException("Template file not found: " . $templateFile);
+//       }
+//   }
   public function render(string $tpl, $data = []): string
     {
         foreach ($data as $key => $value) {
