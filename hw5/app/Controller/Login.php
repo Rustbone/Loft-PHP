@@ -7,6 +7,7 @@ use Base\AbstractController;
 class Login extends AbstractController {
     public function index()
     {
+        //var_dump($this->getUser());
         if ($this->getUser()) {
             $this->redirect('/blog');
         }
@@ -28,20 +29,24 @@ class Login extends AbstractController {
         if (!$user) {
             return 'Неверный логин и пароль юзер';
         }
-        $passwordHash = $user->getPasswordHash($password);
+        //$passwordHash = $user->getPasswordHash($password);
 
-        if (password_verify($password, $passwordHash)) {
-            return "Авторизация успешна.";
-        } else {
-            return "Неправильный логин и пароль.";
+        // if (password_verify($password, $passwordHash)) {
+        //     return "Авторизация успешна.";
+        // } else {
+        //     return "Неправильный логин и пароль ff.";
+        // }
+
+        if ($user->getPassword() !== UserModel::getPasswordHash($password)) {
+            return 'Неверный логин и пароль еу';
         }
 
         // return $this->view->render('User/register.phtml', [
         //     'user' => UserModel::getById((int) $_GET['id'])
         // ]);
 
-        // $this->session->authUser($user->getId());
-        // $this->redirect('/blog');
+        $this->session->authUser($user->getId());
+        $this->redirect('/blog');
     }
 
     public function register() {
@@ -75,8 +80,8 @@ class Login extends AbstractController {
         $user = new UserModel($userData);
         $user->save();
 
-        // $this->session->authUser($user->getId());
-        // $this->redirect('/blog');
+        $this->session->authUser($user->getId());
+        $this->redirect('/blog');
 
         return "Регистрация прошла успешно.";
     }

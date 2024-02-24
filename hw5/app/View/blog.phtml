@@ -8,8 +8,8 @@
 
 Список сообщений: <br>
 <?php
-/** @var $message \App\Model\Message */
-/** @var $user \App\Model\User */
+/** @var $message \App\Model\MessageModel */
+/** @var $user \App\Model\UserModel */
 $user = $this->user;
 ?>
 <?php if($messages = $this->messages): ?>
@@ -42,3 +42,6 @@ $user = $this->user;
     Изображение: <input type="file" name="image"><br>
     <input type="submit" value="Отправить">
 </form>
+
+<?php
+var_dump($this->getName());
