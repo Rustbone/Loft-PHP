@@ -13,4 +13,8 @@ class Session {
   public function getUserId() { 
       return $_SESSION['user_id'] ?? false; 
   } 
+  public function destroy()
+  {
+    session_destroy();
+  }
 }

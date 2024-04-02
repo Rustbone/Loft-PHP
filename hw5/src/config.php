@@ -6,7 +6,7 @@ define('DB_NAME', 'Week3');
 define('DB_USER', 'root');
 define('DB_PASSWORD', 'root');
 
-const ADMIN_IDS = [9];
+const ADMIN_IDS = [31];
 
 function d(...$args) {
   var_dump($args);

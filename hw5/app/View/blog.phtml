@@ -1,5 +1,5 @@
 <style>
-    .message { margin: 5px 0 0 5px; border: 1px solid grey; width: 450px; min-height: 100px;}
+    .user { margin: 5px 0 0 5px; border: 1px solid grey; width: 450px; min-height: 100px;}
     .author { margin-left: 10px; }
     .text { padding-left: 15px; padding-top: 15px; }
     .date {color: grey; font-size: 11px;}
@@ -8,28 +8,32 @@
 
 Список сообщений: <br>
 <?php
-/** @var $message \App\Model\MessageModel */
-/** @var $user \App\Model\UserModel */
+/** @var $message \App\Model\Eloquent\Message */
+/** @var $user \App\Model\Eloquent\User */
 $user = $this->user;
 ?>
+
+Вы вошли как <?=$user->getName();?>#<?=$user->getId();?> <a href="/logout">выйти blog</a>
+<br><br>
+
 <?php if($messages = $this->messages): ?>
     <?php foreach ($messages as $message): ?>
         <div class="message">
-            <? if($user->isAdmin()): ?>
+            <?php if($user->isAdmin()): ?>
             <div class="admin">
                 <a href="/admin/deleteMessage/?id=<?=$message->getId();?>">delete</a>
             </div>
-            <? endif; ?>
+            <?php endif; ?>
             <span class="date"><?=$message->getCreatedAt();?> </span>
-            <? if($author = $message->getAuthor()):?>
+            <?php if($author = $message->getAuthor()):?>
                 <span class="author"><?=htmlspecialchars($author->getName());?></span>
-            <? else: ?>
+            <?php else: ?>
                 <span class="author">Сообщение от удаленного пользователя</span>
-            <? endif; ?>
+            <?php endif; ?>
             <div class="text"><?=htmlspecialchars(nl2br($message->getText()));?></div>
-            <? if($message->getImage()):?>
+            <?php if($message->getImage()):?>
                 <div><img src="/images/<?=$message->getImage();?>" style="width: 150px;"></div>
-            <? endif;?>
+            <?php endif;?>
         </div>
     <?php endforeach; ?>
 <?php else: ?>
@@ -43,5 +47,3 @@ $user = $this->user;
     <input type="submit" value="Отправить">
 </form>
 
-<?php
-var_dump($this->getName());

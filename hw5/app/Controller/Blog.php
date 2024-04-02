@@ -1,32 +1,33 @@
 <?php
 namespace App\Controller;
 
-use App\Model\MessageModel;
+use App\Model\Eloquent\Message;
 use Base\AbstractController;
 
 class Blog extends AbstractController
 {
     public function index()
     {
-      var_dump($this->getUser());
+      //var_dump($this->getList());
         if (!$this->getUser()) {
             $this->redirect('/login');
         }
-        $messages = MessageModel::getList();
-        if ($messages) {
-            $userIds = array_map(function (MessageModel $message) {
-                return $message->getAuthorId();
-            }, $messages);
-            $users = \App\Model\UserModel::getByIds($userIds);
-            array_walk($messages, function (MessageModel $message) use ($users) {
-                if (isset($users[$message->getAuthorId()])) {
-                    $message->setAuthor($users[$message->getAuthorId()]);
-                }
-            });
-        }
+        $messages = Message::getList();
+        // if ($messages) {
+        //     $userIds = array_map(function (MessageModel $message) {
+        //         return $message->getAuthorId();
+        //     }, $messages);
+        //     $users = \App\Model\UserModel::getByIds($userIds);
+        //     array_walk($messages, function (MessageModel $message) use ($users) {
+        //         if (isset($users[$message->getAuthorId()])) {
+        //             $message->setAuthor($users[$message->getAuthorId()]);
+        //         }
+        //     });
+        // }
         return $this->view->render('blog.phtml', [
             'messages' => $messages,
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'author' => $this->getUser()
         ]);
     }
 
@@ -41,7 +42,7 @@ class Blog extends AbstractController
             $this->error('Сообщение не может быть пустым');
         }
 
-        $message = new MessageModel ([
+        $message = new Message ([
             'text' => $text,
             'author_id' => $this->getUserId(),
             'created_at' => date('Y-m-d H:i:s')
@@ -56,10 +57,10 @@ class Blog extends AbstractController
 
     }
 
-    // public function twig()
-    // {
-    //     return $this->view->renderTwig('test.twig', ['var' => 'ololo']);
-    // }
+    public function twig()
+    {
+        return $this->view->renderTwig('test.twig', ['var' => 'ololo']);
+    }
 
     private function error()
     {

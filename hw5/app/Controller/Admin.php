@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Model\MessageModel;
+use App\Model\Eloquent\Message;
 use Base\AbstractController;
 
 class Admin extends AbstractController
@@ -18,7 +18,7 @@ class Admin extends AbstractController
     public function deleteMessage()
     {
         $messageId = (int) $_GET['id'];
-        MessageModel::deleteMessage($messageId);
+        Message::deleteMessage($messageId);
         $this->redirect('/blog');
     }
 }

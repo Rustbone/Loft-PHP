@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Model\MessageModel;
+use App\Model\Eloquent\Message;
 use Base\AbstractController;
 
 class Api extends AbstractController
@@ -12,12 +12,12 @@ class Api extends AbstractController
         if (!$userId) {
             return $this->response(['error' => 'no_user_id']);
         }
-        $messages = MessageModel::getUserMessages($userId, 20);
+        $messages = Message::getUserMessages($userId, 20);
         if (!$messages) {
             return $this->response(['error' => 'no_messages']);
         }
 
-        $data = array_map(function (MessageModel $message) {
+        $data = array_map(function (Message $message) {
             return $message->getData();
         }, $messages);
 

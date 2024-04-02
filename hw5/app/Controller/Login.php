@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Model\UserModel;
+use App\Model\Eloquent\User;
 use Base\AbstractController;
 
 class Login extends AbstractController {
@@ -23,7 +23,7 @@ class Login extends AbstractController {
     public function auth() {
         $email = (string) $_POST['email'];
         $password = (string) $_POST['password'];
-        $user = UserModel::getByEmail($email);
+        $user = User::getByEmail($email);
         //$passwordHash = $user->getPasswordHash($password);
 
         if (!$user) {
@@ -37,7 +37,7 @@ class Login extends AbstractController {
         //     return "Неправильный логин и пароль ff.";
         // }
 
-        if ($user->getPassword() !== UserModel::getPasswordHash($password)) {
+        if ($user->getPassword() !== User::getPasswordHash($password)) {
             return 'Неверный логин и пароль еу';
         }
 
@@ -74,16 +74,22 @@ class Login extends AbstractController {
         $userData = [
             'name' => $name,
             'created_at' => date('Y-m-d H:i:s'),
-            'password' => $password,
+            'password' => User::getPasswordHash($password),
             'email' => $email,
         ];
-        $user = new UserModel($userData);
+        $user = new User($userData);
         $user->save();
 
         $this->session->authUser($user->getId());
         $this->redirect('/blog');
 
         return "Регистрация прошла успешно.";
+    }
+
+    public function logout()
+    {
+        $this->session->destroy();
+        $this->redirect('/login');
     }
 
     // public function profile() {

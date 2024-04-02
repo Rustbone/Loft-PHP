@@ -1,7 +1,7 @@
 <?php
 namespace Base;
 
-use App\Model\UserModel;
+use App\Model\Eloquent\User;
 
 class AbstractController
 {
@@ -15,14 +15,14 @@ class AbstractController
         $this->view = $view;
     }
 
-    public function getUser(): ?UserModel
+    public function getUser(): ?User
     {
         $userId = $this->session->getUserId();
         if (!$userId) {
             return null;
         }
 
-        $user = UserModel::getById($userId);
+        $user = User::getById($userId);
         if (!$user) {
             return null;
         }
@@ -51,6 +51,11 @@ class AbstractController
 
     public function preDispatch()
     {
+        if ($this->getUser()) {
+        $this->view->assign([
+            'user' => $this->getUser()
+        ]);
+    }
 
     }
 }
